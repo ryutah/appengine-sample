@@ -1,0 +1,18 @@
+version: "2"
+
+tasks:
+  serve:
+    desc: "ローカルサーバ起動"
+    cmds:
+      - skaffold dev --no-prune=false --cache-artifacts=false --no-prune-children=false
+  deploy:
+    desc: "GAEデプロイ開始"
+    cmds:
+      - gcloud app deploy --quiet service1 service2
+  clean_container:
+    desc: "ローカルのDockerイメージのクリーンアップをする"
+    cmds:
+      - docker image prune -f
+      - docker image rm -f $(docker image ls service1 -q)
+      - docker image rm -f $(docker image ls service2 -q)
+      - docker image rm -f $(docker image ls --filter 'dangling=true' -q)

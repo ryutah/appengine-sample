@@ -1,0 +1,14 @@
+apiVersion: skaffold/v2beta5
+kind: Config
+metadata:
+  name: multiple-service
+build:
+  artifacts:
+    - image: service1
+      context: service1
+    - image: service2
+      context: service2
+deploy:
+  kubectl:
+    manifests:
+      - k8s.yaml
